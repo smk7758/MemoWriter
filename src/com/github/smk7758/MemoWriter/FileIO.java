@@ -1,6 +1,7 @@
 package com.github.smk7758.MemoWriter;
 
 import java.io.BufferedWriter;
+import java.io.File;
 import java.io.IOException;
 import java.nio.charset.Charset;
 import java.nio.charset.MalformedInputException;
@@ -52,21 +53,31 @@ public class FileIO {
 		return textLine;
 	}
 
-	public static Path selectFile(Stage mainStage) {
+	/**
+	 * @param mainStage
+	 * @return may return null when unchoosed.
+	 */
+	public static Optional<Path> selectFile(Stage mainStage) {
 		FileChooser fileChooser = new FileChooser();
 		fileChooser.setTitle("Open File");
 		fileChooser.getExtensionFilters().addAll(
 				new ExtensionFilter("Text Files", "*.txt"),
 				new ExtensionFilter("All Files", "*.*"));
-		return fileChooser.showOpenDialog(mainStage).toPath();
+		final File choosedFile = fileChooser.showOpenDialog(mainStage);
+		return choosedFile != null ? Optional.of(choosedFile.toPath()) : Optional.empty();
 	}
 
-	public static Path selectSaveFile(Stage mainStage) {
+	/**
+	 * @param mainStage
+	 * @return may return null when unchoosed.
+	 */
+	public static Optional<Path> selectSaveFile(Stage mainStage) {
 		FileChooser fileChooser = new FileChooser();
 		fileChooser.setTitle("Save File");
 		fileChooser.getExtensionFilters().addAll(
 				new ExtensionFilter("Text Files", "*.txt"),
 				new ExtensionFilter("All Files", "*.*"));
-		return fileChooser.showSaveDialog(mainStage).toPath();
+		final File choosedFile = fileChooser.showSaveDialog(mainStage);
+		return choosedFile != null ? Optional.of(choosedFile.toPath()) : Optional.empty();
 	}
 }

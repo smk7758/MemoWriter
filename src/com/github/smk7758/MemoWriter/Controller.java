@@ -2,6 +2,7 @@ package com.github.smk7758.MemoWriter;
 
 import java.nio.charset.Charset;
 import java.nio.file.Path;
+import java.nio.file.Paths;
 import java.util.List;
 import java.util.Optional;
 
@@ -16,23 +17,24 @@ public class Controller {
 
 	@FXML
 	public void save() {
-		FileIO.writeFile(filePath.orElseGet(() -> FileIO.selectFile(Main.primaryStage)), getTextLine());
-		Main.printDebug("Saved to: " + filePath.toString());
+		FileIO.writeFile(filePath.orElseGet(() -> FileIO.selectFile(Main.primaryStage).get()), getTextLine());
+		Main.printDebug("Saved to: " + filePath.get().toString());
 	}
 
 	@FXML
 	public void saveAs() {
-		filePath = Optional.ofNullable(FileIO.selectSaveFile(Main.primaryStage));
-		FileIO.writeFile(filePath.get(), getTextLine());
-		Main.printDebug("Save As: " + filePath.toString());
+		filePath = FileIO.selectSaveFile(Main.primaryStage);
+		FileIO.writeFile(filePath.orElseGet(() -> Paths.get("")), getTextLine());
+		Main.printDebug("Save As: " + filePath.get().toString());
 	}
 
 	@FXML
 	public void openFile() {
-		filePath = Optional.ofNullable(FileIO.selectFile(Main.primaryStage));
-		Main.printDebug("Open File Path: " + filePath.toString());
+		filePath = FileIO.selectFile(Main.primaryStage);
+		Main.printDebug("Open File Path: " + filePath.orElseGet(() -> Paths.get("")).toString());
 
-		Optional<List<String>> textLine = FileIO.readFile(filePath.get(), Charset.forName("Windows-31j"));
+		Optional<List<String>> textLine = FileIO.readFile(filePath.orElseGet(() -> Paths.get("")),
+				Charset.forName("Windows-31j"));
 		if (textLine.isPresent()) {
 			showTextLine(textLine.get());
 		} else {
