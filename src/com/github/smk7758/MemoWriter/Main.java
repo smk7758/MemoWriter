@@ -10,6 +10,7 @@ import javafx.stage.Stage;
 public class Main extends Application {
 	public static final String SoftwareName = "MemoWriter_0.0.1";
 	public static Stage primaryStage = null;
+	public static boolean debugMode = true;
 
 	public static void main(String[] args) {
 		launch(args);
@@ -34,5 +35,9 @@ public class Main extends Application {
 		} catch (IOException e) {
 			e.printStackTrace();
 		}
+	}
+
+	public static void printDebug(String text) {
+		if (Main.debugMode) System.out.println(text);
 	}
 }

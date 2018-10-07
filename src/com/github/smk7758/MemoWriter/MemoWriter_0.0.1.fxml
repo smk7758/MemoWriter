@@ -20,12 +20,12 @@
             <items>
                   <MenuItem mnemonicParsing="false" onAction="#openFile" text="Open File" />
               <MenuItem mnemonicParsing="false" onAction="#save" text="Save" />
-                  <MenuItem mnemonicParsing="false" text="Save As" />
+                  <MenuItem mnemonicParsing="false" onAction="#saveAs" text="Save As" />
             </items>
           </Menu>
           <Menu mnemonicParsing="false" text="Edit">
             <items>
-              <MenuItem mnemonicParsing="false" text="Delete" />
+              <MenuItem mnemonicParsing="false" text="Change Charactor Type" />
             </items>
           </Menu>
           <Menu mnemonicParsing="false" text="Help">

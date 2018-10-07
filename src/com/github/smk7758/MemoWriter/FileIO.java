@@ -20,7 +20,7 @@ public class FileIO {
 				bw.write(text + System.lineSeparator());
 			}
 		} catch (IOException ex) {
-			ex.printStackTrace();
+			Main.printDebug(ex.getMessage());
 		}
 	}
 
@@ -45,18 +45,28 @@ public class FileIO {
 			textLine = Optional.ofNullable(Files.readAllLines(filePath, charset));
 		} catch (MalformedInputException ex) {
 			System.err.println("The charset is not correct.");
+			Main.printDebug(ex.getMessage());
 		} catch (IOException ex) {
-			ex.printStackTrace();
+			Main.printDebug(ex.getMessage());
 		}
 		return textLine;
 	}
 
 	public static Path selectFile(Stage mainStage) {
 		FileChooser fileChooser = new FileChooser();
-		fileChooser.setTitle("Open Resource File");
+		fileChooser.setTitle("Open File");
 		fileChooser.getExtensionFilters().addAll(
 				new ExtensionFilter("Text Files", "*.txt"),
 				new ExtensionFilter("All Files", "*.*"));
 		return fileChooser.showOpenDialog(mainStage).toPath();
+	}
+
+	public static Path selectSaveFile(Stage mainStage) {
+		FileChooser fileChooser = new FileChooser();
+		fileChooser.setTitle("Save File");
+		fileChooser.getExtensionFilters().addAll(
+				new ExtensionFilter("Text Files", "*.txt"),
+				new ExtensionFilter("All Files", "*.*"));
+		return fileChooser.showSaveDialog(mainStage).toPath();
 	}
 }
