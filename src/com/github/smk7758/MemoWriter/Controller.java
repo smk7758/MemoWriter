@@ -15,22 +15,45 @@ public class Controller {
 	@FXML
 	TextArea textArea;
 
+	public void initialize() {
+		Main.primaryStage.showingProperty().addListener((observable, oldValue, newValue) -> {
+			if (oldValue == true && newValue == false) {
+				// TODO
+				System.out.println("Close.");
+			}
+		});
+	}
+
 	@FXML
 	public void save() {
-		FileIO.writeFile(filePath.orElseGet(() -> FileIO.selectFile(Main.primaryStage).get()), getTextLine());
+		// 空ならファイル名をつけて保存。
+		if (isEmpty(filePath)) {
+			saveAs();
+			return;
+		}
+		FileIO.writeFile(filePath.get(), getTextLine());
 		Main.printDebug("Saved to: " + filePath.get().toString());
 	}
 
 	@FXML
 	public void saveAs() {
-		filePath = FileIO.selectSaveFile(Main.primaryStage);
+		// 空ならSaveしない。
+		if (isEmpty(filePath = FileIO.selectSaveFile(Main.primaryStage))) {
+			return;
+		}
+
 		FileIO.writeFile(filePath.orElseGet(() -> Paths.get("")), getTextLine());
 		Main.printDebug("Save As: " + filePath.get().toString());
 	}
 
 	@FXML
 	public void openFile() {
-		filePath = FileIO.selectFile(Main.primaryStage);
+		// 空なら再帰的に。
+		if (isEmpty(filePath = FileIO.selectFile(Main.primaryStage))) {
+			openFile();
+			return;
+		}
+
 		Main.printDebug("Open File Path: " + filePath.orElseGet(() -> Paths.get("")).toString());
 
 		Optional<List<String>> textLine = FileIO.readFile(filePath.orElseGet(() -> Paths.get("")),
@@ -49,6 +72,10 @@ public class Controller {
 	 */
 	@FXML
 	public void showMessage(String text) {
+	}
+
+	public boolean isEmpty(Optional<Path> filePath) {
+		return !filePath.isPresent();
 	}
 
 	/**

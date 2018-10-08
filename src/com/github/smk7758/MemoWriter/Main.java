@@ -21,6 +21,9 @@ public class Main extends Application {
 		Main.primaryStage = primaryStage;
 		try {
 			Scene scene = new Scene(FXMLLoader.load(getClass().getResource("MemoWriter_0.0.1.fxml")));
+			// FXMLLoader loader = new FXMLLoader(getClass().getResource("MemoWriter_0.0.1.fxml"));
+			// Scene scene = new Scene(loader.load());
+			// controller = (Controller) loader.getController();
 			// Set ico
 			// primaryStage.getIcons().add(new Image((getClass().getResource("OnlyDownloader_x16.ico").toString())));
 			// primaryStage.getIcons().add(new Image((getClass().getResource("OnlyDownloader_x32.ico").toString())));
