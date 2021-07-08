@@ -50,14 +50,13 @@ public class Controller {
 	public void openFile() {
 		// 空なら再帰的に。
 		if (isEmpty(filePath = FileIO.selectFile(Main.primaryStage))) {
-			openFile();
+//			openFile();
 			return;
 		}
 
 		Main.printDebug("Open File Path: " + filePath.orElseGet(() -> Paths.get("")).toString());
 
-		Optional<List<String>> textLine = FileIO.readFile(filePath.orElseGet(() -> Paths.get("")),
-				Charset.forName("Windows-31j"));
+		Optional<List<String>> textLine = FileIO.readFile(filePath.orElseGet(() -> Paths.get("")), Charset.forName("Windows-31j"));
 		if (textLine.isPresent()) {
 			showTextLine(textLine.get());
 		} else {
